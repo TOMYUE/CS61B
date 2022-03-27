@@ -5,7 +5,7 @@ import java.util.Observable;
 
 
 /** The state of a game of 2048.
- *  @author TODO: YOUR NAME HERE
+ *  @author TODO: TOMYUE
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -23,7 +23,7 @@ public class Model extends Observable {
      */
 
     /** Largest piece value. */
-    public static final int MAX_PIECE = 2048;
+    public static final int MAX_PIECE = 2048;   // using this in the `maxTileExists`
 
     /** A new 2048 game on a board of size SIZE with no pieces
      *  and score 0. */
@@ -106,6 +106,8 @@ public class Model extends Observable {
      *    value, then the leading two tiles in the direction of motion merge,
      *    and the trailing tile does not.
      * */
+//    public void moveToghterInline ()
+
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
@@ -114,10 +116,65 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+        // set the side to be NORTH, if it is not north, therefor easy to manipulate
+        if (side != Side.NORTH) {
+            board.setViewingPerspective(side);
+        }
+        // press up, and turn all the tiles be adjacent
+        int board_size = board.size();
+        for (int colIndex = 0; colIndex < board_size; ++colIndex){ // move all tiles in a line adjacent, col by col
+            int nullCount = 0; // count how many null tile is before current tile in a line
+            for (int rowIndex = board_size -1; rowIndex >= 0; --rowIndex){
+                if(board.tile(colIndex, rowIndex) == null) {
+                    nullCount++;
+                    continue;
+                }
+                Tile t = board.tile(colIndex, rowIndex);
+                if(board.tile(colIndex, rowIndex+nullCount) == null) {
+                    board.move(colIndex, rowIndex + nullCount, t);
+                    changed = true;
+                }
+            }
+        }
+
+        // merge if possible
+        for (int colIndex = 0; colIndex < board_size; ++colIndex){
+            for (int rowIndex = board_size -1; rowIndex > 0; --rowIndex){
+                if((board.tile(colIndex, rowIndex) != null) && (board.tile(colIndex, rowIndex -1) != null) && (board.tile(colIndex, rowIndex).value() == board.tile(colIndex, rowIndex - 1).value())){
+                    //Tile currentTile = board.tile(colIndex, rowIndex);
+                    Tile nextTile = board.tile(colIndex, rowIndex-1);
+                    board.move(colIndex, rowIndex, nextTile);
+                    score += nextTile.value()*2;
+                    changed = true;
+                }
+            }
+        }
+
+        // turn all tiles together again after merge
+        for (int colIndex = 0; colIndex < board_size; ++colIndex){ // move all tiles in a line adjacent, col by col
+            int nullCount = 0; // count how many null tile is before current tile in a line
+            for (int rowIndex = board_size -1; rowIndex >= 0; --rowIndex){
+                if(board.tile(colIndex, rowIndex) == null) {
+                    nullCount++;
+                    continue;
+                }
+                Tile t = board.tile(colIndex, rowIndex);
+                if(board.tile(colIndex, rowIndex+nullCount) == null) {
+                    board.move(colIndex, rowIndex+nullCount, t);
+                }
+            }
+        }
+
+        // turn the side back, if the origin side is not north
+        if(side != Side.NORTH) {
+            board.setViewingPerspective(Side.NORTH);
+        }
+
         checkGameOver();
         if (changed) {
             setChanged();
         }
+
         return changed;
     }
 
@@ -138,6 +195,14 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        int board_size = b.size();
+        for(int i = 0; i < board_size; ++i){
+            for(int j = 0; j < board_size; ++j){
+               if( b.tile(i,j) == null){
+                   return true;
+               }
+            }
+        }
         return false;
     }
 
@@ -148,6 +213,19 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        /**
+         * if ( x == MAX_PIECE)
+         *      then exit
+         * */
+        int board_size = b.size();
+        for (int i = 0; i < board_size; ++i)
+            for (int j = 0; j < board_size; ++j) {
+                if (b.tile(i, j) == null) {
+                } else {
+                    if (b.tile(i, j).value() == MAX_PIECE)
+                        return true;
+                }
+            }
         return false;
     }
 
@@ -157,9 +235,46 @@ public class Model extends Observable {
      * 1. There is at least one empty space on the board.
      * 2. There are two adjacent tiles with the same value.
      */
+
+    /** Auxilary funciton to test whether has same value tiles */
+    public static boolean hasSameAdjacentTiles(Board b){
+        int board_size = b.size();
+        // test (n-1)*(n-1) size board
+        for (int i = 0; i < board_size -1; ++i){
+            for (int j = 0; j < board_size -1 ; ++j){
+                if ((b.tile(i, j).value() == b.tile(i + 1, j).value()) || (b.tile(i, j).value() == b.tile(i, j + 1).value())){
+                    return true;
+                }
+            }
+        }
+        // test n_th  col
+        int col = board_size -1;
+        for (int i = 0; i < board_size - 1; ++i){
+           if (b.tile(col, i).value() == b.tile(col, i+1).value())
+               return true;
+        }
+        // test n_th row
+        int row = board_size -1;
+        for (int j = 0; j < board_size - 1; ++j){
+            if (b.tile(j, row).value() == b.tile(j+1, row).value())
+                return true;
+        }
+
+        return false;
+    }
+
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
-        return false;
+        // condition 1
+        boolean b1 = true;
+        if (emptySpaceExists(b))
+            return b1;
+        else{ // condition 2
+            if(hasSameAdjacentTiles(b))
+                return b1;
+            else
+                return false;
+        }
     }
 
 

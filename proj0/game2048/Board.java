@@ -11,6 +11,7 @@ import java.util.Random;
  * @author hug
  */
 public class Board implements Iterable<Tile> {
+    // using Iterable make Tile can be used by for-each
     /** Current contents of the board. */
     private Tile[][] values;
     /** Side that the board currently views as north. */
