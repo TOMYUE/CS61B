@@ -1,3 +1,7 @@
+/**
+ * Deque implemention using Linked list
+ * @author TOMYUE
+ */
 package deque;
 
 public class LinkedListDeque<T> {
@@ -102,6 +106,7 @@ public class LinkedListDeque<T> {
         TNode p = sentinel.next;
         while (p.next.next != sentinel){
             System.out.print(p.item + " ");
+            p = p.next;
         }
         System.out.println(p.item);
     }
