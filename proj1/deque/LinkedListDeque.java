@@ -1,38 +1,108 @@
 package deque;
 
-public class LinkedListDeque {
+public class LinkedListDeque<T> {
+    /** nested class TNode */
+    private class TNode{
+        private T item;
+        private TNode prev;
+        private TNode next;
 
-    public class TNode<T>{
+        /** constructor of a sentinel node. */
+        public TNode(TNode prev, TNode next){
+            this.prev = null;
+            this.next = null;
+        }
 
+        /** constructor of a node with item, and pointers. */
+        public TNode(T item, TNode prev, TNode next){
+            this.item = item;
+            this.prev = prev;
+            this.next = next;
+        }
     }
+
+    private TNode sentinel;
+    private int size;
 
     /** Creates an empty deque */
     public LinkedListDeque(){
-
+            sentinel = new TNode(null, null);
+            sentinel.prev = sentinel;
+            sentinel.next = sentinel;
+            size = 0;
     }
 
-    /** Creates a deep copy of other Deque. */
-    public LinkedListDeque(LinkedListDeque other){
-
+    /** Returns true if the deque is empty. */
+    public boolean isEmpty(){
+        return size == 0;
     }
 
-    //    public void addFirst(T item)
+    /** Returns the number of items in the deque. */
+    public int size(){
+        return size;
+    }
 
-//    public void addLast(T item)
+    /** Adds item to the front of the deque. */
+    public void addFirst(T item){
+        TNode newNode = new TNode(item, sentinel, sentinel.next);
+        sentinel.next.prev = newNode;
+        sentinel.next = newNode;
+        size += 1;
+    }
 
-//    public boolean isEmpyt()
+    /** Adds item to the last of the deque. */
+    public void addLast(T item){
+        TNode newNode = new TNode(item, sentinel.prev, sentinel);
+        sentinel.prev.next = newNode;
+        sentinel.prev = newNode;
+        size += 1;
+    }
 
-//    public int size()
+    /** Removes first item in the deque. */
+    public T removeFirst(){
+        if(size == 0){
+            return null;
+        }
 
-//    public void printDeque()
+        T firstItem = sentinel.next.item;
+        sentinel.next.next.prev = sentinel;
+        sentinel.next = sentinel.next.next;
+        size -= 1;
+        return firstItem;
+    }
 
-//    public T removeFirst()
+    /** Removes last item in the deque. */
+    public T removeLast(){
+        if(size == 0){
+            return null;
+        }
 
-//    public T removeLast()
+        T lastItem = sentinel.prev.item;
+        sentinel.prev.prev.next = sentinel;
+        sentinel.prev = sentinel.prev.prev;
+        size -= 1;
+        return lastItem;
+    }
 
-//    public T get(int index)
+    /** Gets the item at the given index. */
+    public T get(int index){
+        if(index +1 > size){
+            return null;
+        }
+        TNode p = sentinel.next;
+        while(index > 0){
+            p = p.next;
+            index -= 1;
+        }
+        return p.item;
+    }
 
-//    public T getRecursive(int index)
-
-
+    /** Prints all the items in the deque. */
+    public void printDeque(){
+        TNode p = sentinel.next;
+        while (p.next.next != sentinel){
+            System.out.print(p.item + " ");
+        }
+        System.out.println(p.item);
+    }
 }

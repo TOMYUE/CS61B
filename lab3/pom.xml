@@ -40,5 +40,12 @@
             </plugin>
         </plugins>
     </build>
-    
+    <dependencies>
+        <dependency>
+            <groupId>javalib.CS61B</groupId>
+            <artifactId>algs4.jar</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
 </project>
