@@ -35,6 +35,27 @@ public class ArrayDequeTest {
     }
 
     @Test
+    /** Adds continue items to the first.*/
+    public void addContinueToFirst(){
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
+        ad1.addFirst(1);
+        ad1.addFirst(2);
+        ad1.addFirst(3);
+        ad1.printDeque();
+        assertEquals(3, ad1.size());
+    }
+
+    @Test
+    /** Adds continue items to last. */
+    public void addContinueToLast(){
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
+        ad1.addLast(1);
+        ad1.addLast(2);
+        ad1.addLast(3);
+        ad1.printDeque();
+    }
+
+    @Test
     /** Adds continue items to see the results. */
     public void addContinueItem(){
         ArrayDeque<Integer> ad1 = new ArrayDeque<>();
@@ -49,6 +70,7 @@ public class ArrayDequeTest {
             assertEquals("each element squence", i, temp);
         }
     }
+
     @Test
     /** Adds an item, then removes an item, and ensures that ad2 is empty afterwards. */
     public void addRemoveTest() {
@@ -109,7 +131,7 @@ public class ArrayDequeTest {
         ArrayDeque<Integer> ad1 = new ArrayDeque<>();
 
         for(int i = 0; i < 100000; ++i){
-            ad1.addFirst(i);
+            ad1.addLast(i);
         }
 
         for(double i = 0; i < 50000; ++i){

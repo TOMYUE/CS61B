@@ -45,42 +45,81 @@ public class ArrayDeque<T> {
 
     /** when the size of array is to be less than the size of the deque elements, resize array. */
     private void resizeUp(){
-        T[] resizedArray = (T[]) new Object[array.length * REFACTOR];
-        int tempSize = length - head;
-        System.arraycopy(array, head, resizedArray, 0, tempSize);
-        System.arraycopy(array, 0, resizedArray, tempSize, size - tempSize);
-        array = resizedArray;
+        /* Create new copy array. */
+        T[] temp = (T[]) new Object[array.length*REFACTOR];
+//        length = length*REFACTOR;
+
+        /* Copy the ArrayDeque elements to the temp array. */
+        int ptr = head;
+        int cnt = 0;
+        while (ptr != tail){
+            temp[cnt] = array[ptr];
+            ptr = (ptr + 1 + length) % length;
+            cnt += 1;
+        }
+        temp[cnt] = array[ptr];
+
+        /* Copy back to array. */
+        array = temp;
+
+        /* Update head, tail and length. */
         head = 0;
         tail = size - 1;
+        length = length*REFACTOR;
     }
 
     /** when the size of array is to be more than the size of the deque elements, resize array. */
     private void resizeDown(){
-        T[] resizedArray = (T[]) new Object[array.length/2];
-        if (tail < head){
-            int tempSize = array.length - head;
-            System.arraycopy(array, head, resizedArray, 0, tempSize);
-            System.arraycopy(array, 0, resizedArray, tempSize, size - tempSize);
-        }
-        else {
-            System.arraycopy(array, head, resizedArray, 0, size);
-        }
-        array = resizedArray;
+        /* Create new copy array. */
+       T[] temp = (T[]) new Object[array.length/REFACTOR];
+       //length = length/REFACTOR;
+
+       /* Copy the ArrayDeque elements to the temp array. */
+       int ptr = head;
+       int cnt = 0;
+       while (ptr != tail){
+           temp[cnt] = array[ptr];
+           ptr = (ptr + 1 + length) % length;
+           cnt += 1;
+       }
+       temp[cnt] = array[ptr];
+
+       /* Copy back to array. */
+       array = temp;
+
+       /* Update head, tail and length. */
         head = 0;
         tail = size - 1;
+        length = length/REFACTOR;
     }
 
+
     public void addFirst(T item){
+        if(size == 0){
+            array[0] = item;
+            size += 1;
+            head = 0;
+            tail = 0;
+            return;
+        }
         // if deque has been full, resize
         if(size + 1 > length){
             resizeUp();
         }
+        //array[head] = item;
         head = (head - 1 + length) % length;
         array[head] = item;
         size += 1;
     }
 
     public void addLast(T item){
+        if(size == 0){
+            array[0] = item;
+            size += 1;
+            head = 0;
+            tail = 0;
+            return;
+        }
         // if deque has been full, resize
         if(size + 1 > length){
             resizeUp();
@@ -93,9 +132,10 @@ public class ArrayDeque<T> {
     public void printDeque(){
         int ptr = head;
         while (ptr != tail){
-            System.out.println(array[ptr]);
+            System.out.print(array[ptr] + " ");
             ptr = (ptr + 1 + length) % length;
         }
+        System.out.println(array[ptr]);
     }
 
     public T removeFirst(){
@@ -108,9 +148,9 @@ public class ArrayDeque<T> {
         size -= 1;
 
         // resize the array
-        if(size < array.length/4){
-            resizeDown();
-        }
+//        if(size < array.length/4){
+//            resizeDown();
+//        }
 
         return firstItem;
     }
