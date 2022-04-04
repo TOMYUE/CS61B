@@ -4,14 +4,14 @@
  */
 package deque;
 
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T> {
     private T[] array;
 
     /** size of the deque, also means the number of elements between head and tail.*/
     private int size;
 
     /** define the original size of the array in deque. */
-    private final int SIZE  = 8;
+    private final int SIZE = 8;
 
     /** Refactor constant when resizing the size of the array. */
     private final int REFACTOR = 2;
