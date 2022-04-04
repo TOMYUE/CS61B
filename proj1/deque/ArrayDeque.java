@@ -47,7 +47,6 @@ public class ArrayDeque<T> {
     private void resizeUp(){
         /* Create new copy array. */
         T[] temp = (T[]) new Object[array.length*REFACTOR];
-//        length = length*REFACTOR;
 
         /* Copy the ArrayDeque elements to the temp array. */
         int ptr = head;
@@ -72,7 +71,6 @@ public class ArrayDeque<T> {
     private void resizeDown(){
         /* Create new copy array. */
        T[] temp = (T[]) new Object[array.length/REFACTOR];
-       //length = length/REFACTOR;
 
        /* Copy the ArrayDeque elements to the temp array. */
        int ptr = head;
@@ -106,7 +104,7 @@ public class ArrayDeque<T> {
         if(size + 1 > length){
             resizeUp();
         }
-        //array[head] = item;
+
         head = (head - 1 + length) % length;
         array[head] = item;
         size += 1;
@@ -124,6 +122,7 @@ public class ArrayDeque<T> {
         if(size + 1 > length){
             resizeUp();
         }
+
         tail = (tail + 1 + length) % length;
         array[tail] = item;
         size += 1;
@@ -147,10 +146,10 @@ public class ArrayDeque<T> {
         head = (head + 1 + length) % length;
         size -= 1;
 
-        // resize the array
-//        if(size < array.length/4){
-//            resizeDown();
-//        }
+        /* resize the array */
+        if(size < array.length/4 && !(size >=0 && size <=8)){
+            resizeDown();
+        }
 
         return firstItem;
     }

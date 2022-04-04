@@ -143,4 +143,22 @@ public class ArrayDequeTest {
         }
     }
 
+    @Test
+    /** add and then remove to test whether resize down will make use. */
+    public void checkResizedown(){
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
+
+        for(int i = 0; i < 62; ++i){
+            ad1.addLast(i);
+        }
+        ad1.printDeque();
+
+        for(int i = 0; i < 62; ++i){
+            ad1.removeFirst();
+        }
+
+        ad1.printDeque();
+        assertEquals(ad1.size(), 0);
+//        assertEquals();
+    }
 }
