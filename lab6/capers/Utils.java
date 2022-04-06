@@ -22,6 +22,7 @@ import java.util.List;
 /** Assorted utilities.
  *  @author P. N. Hilfinger
  */
+
 class Utils {
 
     /* READING AND WRITING FILE CONTENTS */
