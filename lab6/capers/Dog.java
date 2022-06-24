@@ -40,7 +40,6 @@ public class Dog implements Serializable{
      * @return Dog read from file
      */
     public static Dog fromFile(String name) {
-        // TODO (hint: look at the Utils file)
         File dog = Utils.join(DOG_FOLDER, name);
         return Utils.readObject(dog, Dog.class);
     }
@@ -58,10 +57,9 @@ public class Dog implements Serializable{
      * Saves a dog to a file for future use.
      */
     public void saveDog() {
-        // TODO (hint: don't forget dog names are unique)
-        File saveFile = Utils.join(DOG_FOLDER, name);
+        File saveFile = Utils.join(DOG_FOLDER, this.name);
         try{
-            saveFile.createNewFile();
+            saveFile.createNewFile(); // create new file to save in the Dog folder
         } catch (IOException e) {
             e.printStackTrace();
         }
