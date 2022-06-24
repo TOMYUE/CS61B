@@ -18,6 +18,7 @@ public class Main {
         switch(firstArg) {
             case "init":
                 // TODO: handle the `init` command
+                /* create a hidden file as local repo. */
                 break;
             case "add":
                 // TODO: handle the `add [filename]` command

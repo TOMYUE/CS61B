@@ -15,14 +15,14 @@ import java.io.IOException;
  */
 public class CapersRepository {
     /** Current Working Directory. */
-    static final File CWD = new File(System.getProperty("."));
+    static final File CWD = new File(System.getProperty("user.dir"));
 
     /** Main metadata folder. */
     static final File CAPERS_FOLDER = Utils.join("CWD",".capers"); // TODO Hint: look at the `join`
                                             //      function in Utils
 
     /** create a new file to store story text. */
-    static final File STORY_FOLDER = Utils.join(".capers","story");
+    static final File STORY_FOLDER = Utils.join(".capers","story.txt");
 
     /**
      * Does required filesystem operations to allow for persistence.
