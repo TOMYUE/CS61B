@@ -1,5 +1,7 @@
 package gitlet;
 
+import java.sql.SQLOutput;
+
 /** Driver class for Gitlet, a subset of the Git version-control system.
  *  @author TOMYUE
  */
@@ -19,6 +21,7 @@ public class Main {
             case "init":
                 // TODO: handle the `init` command
                 /* create a hidden file as local repo. */
+
                 break;
             case "add":
                 // TODO: handle the `add [filename]` command
@@ -60,4 +63,12 @@ public class Main {
                 System.out.println("No command with that name exists.");
         }
     }
+
+    public static void validateNumArgs(String cmd, String[] args, int n) {
+        if(args.length != n){
+            throw new RuntimeException(
+                String.format("Invalid number of arguments for: %s.", cmd));
+        }
+    }
+
 }
