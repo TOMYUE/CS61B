@@ -2,6 +2,8 @@ package gitlet;
 import com.sun.nio.sctp.SctpStandardSocketOptions;
 
 import java.io.File;
+import java.io.IOException;
+
 import static gitlet.Utils.*;
 
 
@@ -47,8 +49,23 @@ public class Repository {
 
 
     /* setup repo */
-    public void setPersistence(){
-
+    public static void setPersistence() throws IOException {
+        // create .gitlet folder
+        GITLET_DIR.mkdir();
+        // create stagingArea folder
+        STAGING_AREA_DIR.mkdir();
+        // addStaged folder
+        STAGED_ADD.mkdir();
+        // removeStaged folder
+        STAGED_REMOVE.mkdir();
+        // create commitArea folder
+        COMMIT_DIR.mkdir();
+        // create bolbs folder
+        BLOBS.mkdir();
     }
 
+    /* write commit info to the */
+    public void writeCommitInfo(String text) {}
+
+    /**/
 }

@@ -1,5 +1,6 @@
 package gitlet;
 
+import java.io.IOException;
 import java.sql.SQLOutput;
 
 /** Driver class for Gitlet, a subset of the Git version-control system.
@@ -21,7 +22,11 @@ public class Main {
             case "init":
                 // TODO: handle the `init` command
                 /* create a hidden file as local repo. */
-
+                try{
+                    Init.init();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
                 break;
             case "add":
                 // TODO: handle the `add [filename]` command
