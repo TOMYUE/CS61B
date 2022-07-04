@@ -45,23 +45,27 @@ public class Repository {
     public static final File COMMIT_DIR = join(GITLET_DIR, "commitArea");
 
     /* bolbs folder to store different versions */
-    public static final  File BLOBS = join(GITLET_DIR, "bolbs");
+    public static final  File BLOBS = join(GITLET_DIR, "blobs");
 
 
     /* setup repo */
     public static void setPersistence() throws IOException {
         // create .gitlet folder
         GITLET_DIR.mkdir();
-        // create stagingArea folder
-        STAGING_AREA_DIR.mkdir();
-        // addStaged folder
-        STAGED_ADD.mkdir();
-        // removeStaged folder
-        STAGED_REMOVE.mkdir();
-        // create commitArea folder
-        COMMIT_DIR.mkdir();
-        // create bolbs folder
-        BLOBS.mkdir();
+        if(GITLET_DIR.exists()){
+            System.out.println("A Gitlet version-control system already exists in the current directory.");
+        }else {
+            // create stagingArea folder
+            STAGING_AREA_DIR.mkdir();
+            // addStaged folder
+            STAGED_ADD.mkdir();
+            // removeStaged folder
+            STAGED_REMOVE.mkdir();
+            // create commitArea folder
+            COMMIT_DIR.mkdir();
+            // create bolbs folder
+            BLOBS.mkdir();
+        }
     }
 
     /* write commit info to the */

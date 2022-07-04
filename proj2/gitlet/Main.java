@@ -15,6 +15,7 @@ public class Main {
         /* When args count is less than one. */
         if(args.length < 1){
             System.out.println("Please enter a command.");
+            System.exit(0);
         }
 
         String firstArg = args[0];
@@ -22,14 +23,17 @@ public class Main {
             case "init":
                 // TODO: handle the `init` command
                 /* create a hidden file as local repo. */
+                validateNumArgs("init", args, 1);
                 try{
-                    Init.init();
+                    Command.init();
                 }catch (IOException e){
                     e.printStackTrace();
                 }
                 break;
             case "add":
                 // TODO: handle the `add [filename]` command
+                validateNumArgs("add", args, 2);
+
                 break;
             case "commit":
                 //TODO: handle the 'commit -m "msg"' command
