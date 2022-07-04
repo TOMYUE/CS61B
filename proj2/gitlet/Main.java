@@ -70,13 +70,13 @@ public class Main {
                 break;
             default:
                 System.out.println("No command with that name exists.");
+                System.exit(0);
         }
     }
 
     public static void validateNumArgs(String cmd, String[] args, int n) {
         if(args.length != n){
-            throw new RuntimeException(
-                String.format("Invalid number of arguments for: %s.", cmd));
+            System.out.println("Incorrect operands.");
         }
     }
 

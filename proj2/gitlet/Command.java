@@ -11,4 +11,9 @@ public class Command {
     static void init() throws IOException{
         Repository.setPersistence();
     }
+
+    /* add command */
+    static void add() throws Exception{
+
+    }
 }

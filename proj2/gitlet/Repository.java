@@ -11,11 +11,15 @@ import static gitlet.Utils.*;
  *  TODO: It's a good idea to give a description here of what else this Class
  *  does at a high level.
  *  .gitlet/ -- top level folder for all persistence meta data in gitlet
- *      -stagingArea/ -- second level folder for staging area.
+ *      -staging/  -- second level folder for staging area.
  *          -addStaged/ -- store for newly added files
- *          -removeStaged/ -- store for newly deleted files
- *      - commitArea/ -- second level folder for commit node informations
- *      - blobs/      -- second level folder for different version of commited files
+ *          -rmStaged/  -- store for newly deleted files
+ *      - commits/ -- second level folder for commit node informations
+ *      - blobs/   -- second level folder for different version of commited files
+ *      - refs/
+ *          - heads/    --
+ *          - remotes/  --
+ *      - HEAD/    -- store branch name, default for master
  *
  *  @author TOMYUE
  */
@@ -37,12 +41,12 @@ public class Repository {
     /* The staging area folder "stagingArea".
     *  excluding two folder, one is staged for adding files, another is staged for removing files.
     *  The former is STAGED_ADD--"addStaged", the latter is STAGED_REMOVE--"removeStaged". */
-    public static final File STAGING_AREA_DIR = join(GITLET_DIR, "stagingArea");
+    public static final File STAGING_AREA_DIR = join(GITLET_DIR, "staging");
     public static final File STAGED_ADD = join(STAGING_AREA_DIR, "addStaged");
-    public static final File STAGED_REMOVE = join(STAGING_AREA_DIR, "removeStaged");
+    public static final File STAGED_REMOVE = join(STAGING_AREA_DIR, "rmStaged");
 
     /* commit folder to store meta data */
-    public static final File COMMIT_DIR = join(GITLET_DIR, "commitArea");
+    public static final File COMMIT_DIR = join(GITLET_DIR, "commits");
 
     /* bolbs folder to store different versions */
     public static final  File BLOBS = join(GITLET_DIR, "blobs");
@@ -53,7 +57,7 @@ public class Repository {
         // create .gitlet folder
         GITLET_DIR.mkdir();
         if(GITLET_DIR.exists()){
-            System.out.println("A Gitlet version-control system already exists in the current directory.");
+            System.out.println("Not in an initialized Gitlet directory.");
         }else {
             // create stagingArea folder
             STAGING_AREA_DIR.mkdir();
