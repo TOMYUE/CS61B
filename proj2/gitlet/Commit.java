@@ -2,6 +2,7 @@ package gitlet;
 
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date; // TODO: You'll likely use this in this class
@@ -14,7 +15,7 @@ import java.util.List;
  *
  *  @author TOMYUE
  */
-public class Commit {
+public class Commit implements Serializable {
     /**
      * TODO: add instance variables here.
      *

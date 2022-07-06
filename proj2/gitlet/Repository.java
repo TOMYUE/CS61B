@@ -49,9 +49,11 @@ public class Repository {
     /* commit folder to store meta data */
     public static final File COMMIT_DIR = join(GITLET_DIR, "commits");
 
-    /* bolbs folder to store different versions */
+    /* blobs folder to store different versions */
     public static final  File BLOBS = join(GITLET_DIR, "blobs");
 
+    /* HEAD folder to store different branches. */
+    public static final File HEAD = join(GITLET_DIR, "HEAD");
 
     /* setup repo */
     public static void setPersistence() throws IOException {
@@ -68,8 +70,10 @@ public class Repository {
             STAGED_REMOVE.mkdir();
             // create commitArea folder
             COMMIT_DIR.mkdir();
-            // create bolbs folder
+            // create blobs folder
             BLOBS.mkdir();
+            // create HEAD folder
+            HEAD.mkdir();
         }
     }
 
@@ -82,7 +86,12 @@ public class Repository {
         setPersistence();
         // Store initial commit message into the COMMIT_DIR
         Commit initialCommit = new Commit("initial commit", new HashMap<>(), null);
+        // store HEAD to the HEAD_DIR
         String master = initialCommit.getHashValue();
+        Head HEAD = new Head(master, "master");
+        HEAD.storeHeadToFile();
+        // store stage to STAGING_AREA_DIR
+
     }
 
     /* add command */
