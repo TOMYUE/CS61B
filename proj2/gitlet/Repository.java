@@ -3,6 +3,7 @@ import com.sun.nio.sctp.SctpStandardSocketOptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import static gitlet.Utils.*;
 
@@ -77,8 +78,11 @@ public class Repository {
 
     /* init command */
     static void init() throws IOException{
+        // Initialize all thr required dirs and files
         setPersistence();
-
+        // Store initial commit message into the COMMIT_DIR
+        Commit initialCommit = new Commit("initial commit", new HashMap<>(), null);
+        String master = initialCommit.getHashValue();
     }
 
     /* add command */
