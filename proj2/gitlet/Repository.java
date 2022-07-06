@@ -75,5 +75,9 @@ public class Repository {
     /* write commit info to the */
     public void writeCommitInfo(String text) {}
 
-    /**/
+    /* init command */
+    static void init() throws IOException{
+        setPersistence();
+
+    }
 }
