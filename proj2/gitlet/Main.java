@@ -25,7 +25,7 @@ public class Main {
                 /* create a hidden file as local repo. */
                 validateNumArgs("init", args, 1);
                 try{
-                    Command.init();
+                    Repository.init();
                 }catch (IOException e){
                     e.printStackTrace();
                 }
