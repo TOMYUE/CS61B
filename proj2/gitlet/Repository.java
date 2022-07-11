@@ -100,8 +100,9 @@ public class Repository {
         stageArea.save();
     }
 
-    /* add command */
-    public static void add(String args2) {
+    /* add command
+    *  Only support one file */
+    public static void add(String fileName) {
 
     }
 
