@@ -41,7 +41,9 @@ public class Commit implements Serializable {
         this.parentHash = parentHash;
         this.curHash = calculateCurHash();
         // write new commit info--this is a String object to FILE
-        SerializeUtils.writeStringToFile(gitMessageFormatter(), Repository.COMMIT_DIR + "/" + this.curHash.substring(0,3), true);
+        //SerializeUtils.writeStringToFile(gitMessageFormatter(), Repository.COMMIT_DIR + "/" + this.curHash.substring(0,3), true);
+        // Utils.writeObject(new File(Repository.COMMIT_DIR + "/" + this.curHash.substring(0,3)), this);
+        Utils.writeObject(Utils.join(Repository.COMMIT_DIR, getHashValue()), this);
     }
 
     /** Git style commit message format generator. */

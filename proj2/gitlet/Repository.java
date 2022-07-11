@@ -95,4 +95,7 @@ public class Repository {
     }
 
     /* add command */
+    static void add() {}
+
+
 }
