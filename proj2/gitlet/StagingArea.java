@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.io.File;
 
 /**
  * @Author TOMYUE
@@ -18,11 +19,15 @@ public class StagingArea implements Serializable {
         removedFiles = new ArrayList<>();
     }
 
+    public void save() {
+        Utils.writeObject(Repository.STAGED_ADD, this);
+    }
+
     public void add(String fileName, String sha1) {
         addedFiles.put(fileName, sha1);
     }
 
-    public void addToRemovedFiles(String fileName){
+    public void remove(String fileName){
         removedFiles.add(fileName);
     }
 

@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date; // TODO: You'll likely use this in this class
 import java.util.HashMap;
 import java.util.List;
+import java.lang.Object;
 
 /** Represents a gitlet commit object.
  *  TODO: It's a good idea to give a description here of what else this Class
@@ -26,7 +27,7 @@ public class Commit implements Serializable {
     /** The message of this Commit.
      *  Include commit message, timestamp, this commit's SHA1 hash value. */
     private String message;
-    private Date datetime;
+    private String datetime;
     private String curHash; //该文件当前commit的hash值
     private String parentHash; //该文件上次提交的hash值
     /* <fileName , SHA1> */
@@ -37,6 +38,7 @@ public class Commit implements Serializable {
         LocalDateTime current = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.message = msg;
+        this.datetime = current.format(formatter);
         this.blobs = blobs;
         this.parentHash = parentHash;
         this.curHash = calculateCurHash();
@@ -62,8 +64,7 @@ public class Commit implements Serializable {
      *  Using SerializeUtils to help convert Object to byteArray.
      * */
     public String calculateCurHash() {
-        byte[] commitObj = SerializeUtils.toByteArray(this);
-        return Utils.sha1(commitObj);
+        return Utils.sha1(Utils.serialize(this));
     }
 
     /** Get the commit hash value. */
@@ -82,7 +83,7 @@ public class Commit implements Serializable {
     }
 
     /** Get the current timestamp. */
-    public Date getDatetime() {
+    public String getDatetime() {
         return this.datetime;
     }
 

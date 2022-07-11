@@ -33,10 +33,12 @@ public class Main {
             case "add":
                 // TODO: handle the `add [filename]` command
                 validateNumArgs("add", args, 2);
-
+                Repository.add(args[2]);
                 break;
             case "commit":
                 //TODO: handle the 'commit -m "msg"' command
+                validateNumArgs("add", args, 2);
+                Repository.commit(args[2]);
                 break;
             case "rm":
                 //TODO: handle the 'rm' command

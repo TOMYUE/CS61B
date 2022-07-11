@@ -58,10 +58,10 @@ public class Repository {
     /* setup repo */
     public static void setPersistence() throws IOException {
         // create .gitlet folder
-        GITLET_DIR.mkdir();
         if(GITLET_DIR.exists()){
             System.out.println("Not in an initialized Gitlet directory.");
         }else {
+            GITLET_DIR.mkdir();
             // create stagingArea folder
             STAGING_AREA_DIR.mkdir();
             // addStaged folder
@@ -77,25 +77,36 @@ public class Repository {
         }
     }
 
-    /* write commit info to the */
-    public void writeCommitInfo(String text) {}
+    /* write commit info to the console. */
+    public static void writeCommitInfo(String text) {
+        System.out.println(text);
+    }
 
     /* init command */
-    static void init() throws IOException{
+    public static void init() throws IOException{
         // Initialize all thr required dirs and files
         setPersistence();
+
         // Store initial commit message into the COMMIT_DIR
         Commit initialCommit = new Commit("initial commit", new HashMap<>(), null);
-        // store HEAD to the HEAD_DIR
-        String master = initialCommit.getHashValue();
-        Head HEAD = new Head(master, "master");
-        HEAD.storeHeadToFile();
-        // store stage to STAGING_AREA_DIR
+        writeCommitInfo(initialCommit.gitMessageFormatter());
 
+        // store HEAD to the HEAD_DIR
+        Head HEAD = new Head(initialCommit.getHashValue(), "master");
+        HEAD.storeHeadToFile();
+
+        // store stage to STAGING_AREA_DIR
+        StagingArea stageArea = new StagingArea();
+        stageArea.save();
     }
 
     /* add command */
-    static void add() {}
+    public static void add(String args2) {
 
+    }
 
+    /* commit command */
+    public static void commit(String msg){
+
+    }
 }
